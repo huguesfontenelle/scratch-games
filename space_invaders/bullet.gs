@@ -5,12 +5,24 @@ var by;
 var c;
 var r;
 var k;
+var ufo_pick;
 
 onflag {
     hide;
 }
 
 proc check_hit {
+    if ufo_active == 1 and touching("ufo") {
+        ufo_pick = random(1, 4);
+        if ufo_pick == 4 {
+            score += 300;
+        } else {
+            score += 50 * ufo_pick;
+        }
+        bullet_active = 0;
+        broadcast "ufo_hit";
+        stop_this_script;
+    }
     bx = x_position();
     by = y_position();
     c = round((bx - formation_x) / 30);
@@ -48,7 +60,7 @@ on "fire" {
         switch_costume "shot";
         goto player_x, -138;
         show;
-        until bullet_active == 0 {
+        until bullet_active == 0 or game_state != 1 {
             change_y 10;
             if y_position() > 175 {
                 bullet_active = 0;

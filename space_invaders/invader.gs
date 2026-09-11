@@ -100,3 +100,39 @@ on "march" {
         }
     }
 }
+
+var bc;
+var br;
+var tries;
+
+on "reset_clones" {
+    if idx > 0 {
+        hide;
+        delete_this_clone;
+    }
+}
+
+on "bombs" {
+    until game_state != 1 {
+        wait 0.4 + 1.6 * alive_total / 55;
+        if game_state == 1 and bomb_count < 3 and alive_total > 0 {
+            tries = 0;
+            bc = random(0, 10);
+            until col_count[bc + 1] > 0 or tries > 20 {
+                bc = random(0, 10);
+                tries++;
+            }
+            if col_count[bc + 1] > 0 {
+                br = 4;
+                until grid[br * 11 + bc + 1] == 1 or br < 0 {
+                    br--;
+                }
+                if br >= 0 {
+                    bomb_x = formation_x + bc * 30;
+                    bomb_y = formation_y - br * 24;
+                    broadcast "drop_bomb";
+                }
+            }
+        }
+    }
+}

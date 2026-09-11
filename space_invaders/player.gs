@@ -1,11 +1,13 @@
 costumes "assets/blank.svg";
 costumes "assets/ship.svg";
+costumes "assets/boom.svg";
 
 onflag {
     hide;
 }
 
 on "start_game" {
+    say "";
     switch_costume "ship";
     set_rotation_style_do_not_rotate;
     goto 0, -150;
@@ -30,4 +32,18 @@ on "start_game" {
             }
         }
     }
+}
+
+on "game_over" {
+    say "GAME OVER - press the green flag";
+}
+
+on "level_clear" {
+    say "WAVE CLEARED - press the green flag";
+}
+
+on "life_lost" {
+    switch_costume "boom";
+    wait 0.4;
+    switch_costume "ship";
 }
