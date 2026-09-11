@@ -52,4 +52,5 @@ onflag {
     show score;
     show lives;
     broadcast "start_game";
+    broadcast "march";
 }
