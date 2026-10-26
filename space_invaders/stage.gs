@@ -55,6 +55,8 @@ onflag {
     hide lives;
     reset_state;
     show score;
+    # Monitors created in the same frame get the same free spot and stack on top of each other.
+    wait 0.1;
     show lives;
     broadcast "start_game";
     broadcast "march";
